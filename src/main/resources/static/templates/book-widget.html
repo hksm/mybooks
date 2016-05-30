@@ -1,0 +1,12 @@
+<a ng-href="#/books/{{ data.id }}" class="thumbnail">
+	<img ng-src="{{ data.coverLink }}" alt="Book Cover" class="img-responsive">
+	<div class="caption">
+		<h4 class="title-style">{{ data.title }}</h4>
+		<p>by <span ng-repeat="author in data.authors"><strong>{{ author.lastName | uppercase }}, {{ author.firstName }}</strong></span></p>
+		<div>
+			<span ng-repeat="genre in data.genres">
+				<span class="label label-default">{{ genre.name }}</span>
+			</span>
+		</div>
+	</div>
+</a>

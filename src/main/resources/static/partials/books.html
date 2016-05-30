@@ -1,0 +1,181 @@
+<uib-alert ng-repeat="alert in alerts" type="{{ alert.type }}" close="closeAlert($index)">{{ alert.message }}</uib-alert>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title"><strong>{{ (book.id ? 'Edit' : 'New') }} Book</strong></h3>
+	</div>
+	<div class="panel-body">
+		<form class="form-horizontal" ng-submit="saveBook(book)">
+			<div class="row">
+				<div class="form-group col-md-6">
+					<label for="title" class="col-md-4 control-label">Title</label>
+					<div class="col-md-8">
+						<input type="text" class="form-control" id="title" placeholder="The Hobbit" ng-model="book.title" ng-required="true">
+					</div>
+				</div>
+				
+				<div class="form-group col-md-6">
+					<label for="authors" class="col-md-4 control-label">Authors</label>
+					<div class="col-md-8">
+						<oi-select oi-options="author.firstName + ' ' + author.lastName for author in authorList track by author.id" ng-model="book.authors" multiple ng-required="true" placeholder="J. R. R. Tolkien"></oi-select>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="form-group col-md-6">
+					<label for="genres" class="col-md-4 control-label">Genres</label>
+					<div class="col-md-8">
+						<oi-select oi-options="genre.name for genre in genreList track by genre.id" ng-model="book.genres" multiple ng-required="true" placeholder="Fantasy"></oi-select>
+					</div>
+				</div>
+
+				<div class="form-group col-md-6">
+					<label for="language" class="col-md-4 control-label">Language</label>
+					<div class="col-md-8">
+						<oi-select oi-options="language.name for language in getLanguages() track by language.id" placeholder="English" ng-model="book.language"></oi-select>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="form-group col-md-6">
+					<label for="publishingDate" class="col-md-4 control-label">Publishing Date</label>
+					<div class="col-md-8">
+						<div class="input-group">
+							<input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="book.publishingDate" is-open="publishingDate.opened" datepicker-options="publishingDateOptions" show-button-bar="false" close-text="Close" alt-input-formats="altInputFormats" placeholder="15/08/2002">
+							<span class="input-group-btn">
+								<button type="button" class="btn btn-default" ng-click="openPublishingDate()"><i class="glyphicon glyphicon-calendar"></i></button>
+							</span>
+			 			</div>
+					</div>
+				</div>
+				
+				<div class="form-group col-md-6">
+					<label for="publisher" class="col-md-4 control-label">Publisher</label>
+					<div class="col-md-8">
+						<input type="text" class="form-control" id="publisher" placeholder="Houghton Mifflin" ng-model="book.publisher">
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="form-group col-md-6">
+					<label for="pages" class="col-md-4 control-label">No. Pages</label>
+					<div class="col-md-8">
+						<input type="text" class="form-control" id="pages" placeholder="366" ng-model="book.pages">
+					</div>
+				</div>
+
+				<div class="form-group col-md-6">
+					<label for="coverLink" class="col-md-4 control-label">Cover Link</label>
+					<div class="col-md-8">
+						<input type="text" class="form-control" id="coverLink" placeholder="https://upload.wikimedia.org/wikipedia/en/3/30/Hobbit_cover.jpg" ng-model="book.coverLink">
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="form-group col-md-6">
+					<!-- button placement fix -->
+				</div>
+				<div class="form-group col-md-6">
+					<div class="col-md-12 text-right">
+						<button type="submit" class="btn {{ book.id ? 'btn-info' : 'btn-primary' }}" ng-disabled="isProcessing">{{ (book.id ? 'Save Updates' : 'Create New') }}</button>
+						<button type="button" class="btn btn-warning" ng-disabled="isProcessing" ng-click="clearFormButton()">Clear</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+<uib-tabset active="active">
+
+	<uib-tab index="0" heading="Thumbnails">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="input-group below-tab">
+					<span class="input-group-addon" id="search-title">Search by Title</span>
+					<input type="text" class="form-control" id="search-title" ng-model="searchTitle" placeholder="Book Title" aria-describedby="Title to search">
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="input-group below-tab">
+					<span class="input-group-addon" id="search-author">Search by Author</span>
+					<input type="text" class="form-control" id="search-author" ng-model="searchAuthor" placeholder="First or Last Name" aria-describedby="Author to search">
+				</div>
+			</div>
+		</div>
+		<div class="row below-tab">
+			<div class="col-xs-6 col-md-3" ng-repeat="book in bookList | filterByTitle: searchTitle | filterByAuthor: searchAuthor">
+				<book data="book"></book>
+			</div>
+		</div>
+	</uib-tab>
+
+	<uib-tab index="1" heading="Table">
+			<table st-table="displayedList" st-safe-src="bookList" class="table table-striped" ng-if="bookList">
+				<thead>
+					<tr>
+						<th></th>
+						<th st-sort="id">ID</th>
+						<th st-sort="title">Title</th>
+						<th st-sort="authors">Authors</th>
+						<th st-sort="genres">Genres</th>
+						<th st-sort="language">Language</th>
+						<th st-sort="publishingDate">Publ. Date</th>
+						<th st-sort="publisher">Publisher</th>
+						<th st-sort="pages">Pages</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="book in displayedList">
+						<td class="thumbnail-column">
+							<a ng-href="{{ book.coverLink }}">
+								<div class="crop">
+									<img ng-src="{{ book.coverLink }}">
+								</div>
+							</a>
+						</td>
+						<td>{{ book.id }}</td>
+						<td><a ng-href="#/book/{{ book.id }}">{{ book.title }}</a></td>
+						<td>
+							<span ng-repeat="author in book.authors">
+								{{ author.firstName + ' ' + author.lastName }}
+								<span>
+									{{ !$last ? ', ' : '' }}
+								</span>
+							</span>
+						</td>
+						<td>
+							<span uib-tooltip="{{ getTooltip(book.genres) }}" 
+								tooltip-enable="book.genres[1]">{{ book.genres[0].name }}
+								<span ng-if="book.genres[1]">
+									<span class="badge genres-badge">+{{ book.genres.length-1 }}</span>
+								</span>
+							</span>
+						</td>
+						<td>{{ book.language.name }}</td>
+						<td>{{ book.publishingDate | date: 'dd/MM/yyyy' }}</td>
+						<td>{{ book.publisher }}</td>
+						<td>{{ book.pages }}</td>
+						<td class="icons">
+							<div class="icons-fixed pull-right">
+								<span class="glyphicon glyphicon-edit" ng-click="editBook(book.id)"></span>
+								<span class="glyphicon glyphicon-trash" confirm-popover confirm-obj="book" confirm-func="deleteBook"></span>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="10" class="text-center">
+							<div st-pagination st-items-by-page="10"></div>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+	</uib-tab>
+</uib-tabset>

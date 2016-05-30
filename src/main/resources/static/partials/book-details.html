@@ -1,0 +1,54 @@
+<div class="row">
+	<div class="col-md-4">
+		<div class="thumbnail below-tab">
+			<img ng-src="{{ book.coverLink }}" alt="{{ book.title }}" class="img-responsive">
+		</div>
+	</div>
+	<div class="col-md-8">
+		<div class="page-header">
+			<h1><strong>{{ book.title }}</strong></h1>
+		</div>
+
+		<h4 class="title-style">by
+			<span ng-repeat="author in book.authors">
+				{{ author.firstName + ' ' + author.lastName }}
+				<span>
+					{{ !$last ? ', ' : '' }}
+				</span>
+			</span>
+		</h4>
+		
+		<div class="genres-container">
+			<span ng-repeat="genre in book.genres">
+				<span class="label label-default">{{ genre.name }}</span>
+			</span>
+		</div>
+		
+		<div class="panel panel-default">
+			<div class="panel-heading">Details</div>
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-6">
+						<p>Language: <strong>{{ book.language.name }}</strong></p>
+						<p>Publication Date: <strong>{{ book.publishingDate | date: 'dd/MM/yyyy' }}</strong></p>
+					</div>
+					<div class="col-md-6">
+						<p>Pages: <strong>{{ book.pages }}</strong></p>
+						<p>Publisher: <strong>{{ book.publisher }}</strong></p>
+					</div>
+				</div>
+				
+				
+				
+			</div>
+		</div>
+		
+		<div class="panel panel-default">
+			<div class="panel-heading">Summary</div>
+			<div class="panel-body">
+				<div ng-bind-html="summary" class="summary"></div>
+			</div>
+		</div>
+		
+	</div>
+</div>

@@ -1,0 +1,112 @@
+<uib-alert ng-repeat="alert in alerts" type="{{ alert.type }}" close="closeAlert($index)">{{ alert.message }}</uib-alert>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title"><strong>{{ (author.id ? 'Edit' : 'New') }} Author</strong></h3>
+	</div>
+	<div class="panel-body">
+		<form class="form-horizontal" ng-submit="saveAuthor(author)">
+			<div class="row">
+				<div class="form-group col-md-6">
+					<label for="firstName" class="col-md-4 control-label">First Name</label>
+					<div class="col-md-8">
+						<input type="text" class="form-control" id="firstName" placeholder="John" ng-model="author.firstName" ng-required="true">
+					</div>
+				</div>
+
+				<div class="form-group col-md-6">
+					<label for="lastName" class="col-md-4 control-label">Last Name</label>
+					<div class="col-md-8">
+						<input type="text" class="form-control" id="lastName" placeholder="Snow" ng-model="author.lastName" ng-required="true">
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="form-group col-md-6">
+					<label for="birthDate" class="col-md-4 control-label">Birth Date</label>
+					<div class="col-md-8">
+						<div class="input-group">
+							<input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="author.birthDate" is-open="birthDate.opened" datepicker-options="birthDateOptions" show-button-bar="false" close-text="Close" alt-input-formats="altInputFormats" placeholder="27/05/2016">
+							<span class="input-group-btn">
+								<button type="button" class="btn btn-default" ng-click="openBirthDate()"><i class="glyphicon glyphicon-calendar"></i></button>
+							</span>
+			 			</div>
+					</div>
+				</div>
+
+				<div class="form-group col-md-6">
+					<label for="country" class="col-md-4 control-label">Country</label>
+					<div class="col-md-8">
+						<oi-select oi-options="country.name for country in getCountries() track by country.id" placeholder="Brazil" ng-model="author.countryBorn"></oi-select>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="form-group col-md-6">
+					<label for="website" class="col-md-4 control-label">Website</label>
+					<div class="col-md-8">
+						<input type="text" class="form-control" id="website" placeholder="google.com" ng-model="author.website">
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="form-group col-md-6">
+					<!-- button placement fix -->
+				</div>
+				<div class="form-group col-md-6">
+					<div class="col-md-12 text-right">
+						<button type="submit" class="btn {{ author.id ? 'btn-info' : 'btn-primary' }}" ng-disabled="isProcessing">{{ (author.id ? 'Save Updates' : 'Create New') }}</button>
+						<button type="button" class="btn btn-warning" ng-disabled="isProcessing" ng-click="clearFormButton()">Clear</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-6">
+		<div class="input-group below-tab">
+			<span class="input-group-addon" id="search-name">Search by Name</span>
+			<input type="text" class="form-control" id="search-name" ng-model="searchName" placeholder="First or Last Name" aria-describedby="Name to search">
+		</div>
+	</div>
+</div>
+
+<table st-table="displayedList" st-safe-src="authorList" class="table table-striped below-tab" ng-if="authorList">
+	<thead>
+		<tr>
+			<th st-sort="id">ID</th>
+			<th st-sort="lastName">Name</th>
+			<th st-sort="birthDate">Birth Date</th>
+			<th st-sort="countryBorn">Country</th>
+			<th st-sort="website">Website</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="author in displayedList | filterByFirstOrLastName: searchName">
+			<td>{{ author.id }}</td>
+			<td><a ng-href="#/author/{{ author.id }}">{{ author.firstName + ' ' + author.lastName }}</a></td>
+			<td>{{ author.birthDate | date: 'dd/MM/yyyy' }}</td>
+			<td>{{ author.countryBorn.name }}</td>
+			<td><a ng-href="http://{{ author.website }}">{{ author.website }}</a></td>
+			<td class="icons">
+				<div class="icons-fixed pull-right">
+					<span class="glyphicon glyphicon-edit" ng-click="editAuthor(author.id)"></span>
+					<span class="glyphicon glyphicon-trash" confirm-popover confirm-obj="author" confirm-func="deleteAuthor"></span>
+				</div>
+			</td>
+		</tr>
+	</tbody>
+	<tfoot>
+		<tr>
+			<td colspan="6" class="text-center">
+				<div st-pagination st-items-by-page="10"></div>
+			</td>
+		</tr>
+	</tfoot>
+</table>

@@ -1,0 +1,94 @@
+<div class="cover">
+	<h1 class="title-font">A book database manager.</h1>
+	<p class="lead ">This is a project developed by Marcos Henrique Henkes as requested by the selective process for a developed job at Bethas Sistemas.</p>
+	<p class="lead">
+		<a href="#" class="btn btn-lg btn-default">Explore</a>
+	</p>
+</div>
+
+<div ng-if="randomBooks[0]">
+
+	<hr class="featurette-divider">
+	
+	<div class="row featurette">
+		<div class="col-md-9">
+			<h2 class="featurette-heading title-font">{{ randomBooks[0].title }}</h2>
+			<h3><span class="text-muted title-font">
+				<span ng-repeat="author in randomBooks[0].authors">
+					{{ author.firstName + ' ' + author.lastName }}
+					<span>
+						{{ !$last ? ', ' : '' }}
+					</span>
+				</span>
+			</span></h3>
+			<div class="genres-container">
+				<span ng-repeat="genre in randomBooks[0].genres">
+					<span class="label label-default">{{ genre.name }}</span>
+				</span>
+			</div>
+			<div class="lead" ng-bind-html="randomBooks[0].summary"></div>
+		</div>
+		<div class="col-md-3">
+			<img class="featurette-image img-responsive center-block" ng-src="{{ randomBooks[0].coverLink }}">
+		</div>
+	</div>
+	
+	<hr class="featurette-divider">
+
+</div>
+
+<div ng-if="randomBooks[1]">
+
+	<div class="row featurette">
+		<div class="col-md-3">
+			<img class="featurette-image img-responsive center-block" ng-src="{{ randomBooks[1].coverLink }}">
+		</div>
+		<div class="col-md-9">
+			<h2 class="featurette-heading title-font">{{ randomBooks[1].title }}</h2>
+			<h3><span class="text-muted title-font">
+				<span ng-repeat="author in randomBooks[1].authors">
+					{{ author.firstName + ' ' + author.lastName }}
+					<span>
+						{{ !$last ? ', ' : '' }}
+					</span>
+				</span>
+			</span></h3>
+			<div class="genres-container">
+				<span ng-repeat="genre in randomBooks[1].genres">
+					<span class="label label-default">{{ genre.name }}</span>
+				</span>
+			</div>
+			<div class="lead" ng-bind-html="randomBooks[1].summary"></div>
+		</div>
+	</div>
+
+</div>
+
+<div ng-if="randomBooks[2]">
+
+	<hr class="featurette-divider">
+	
+	<div class="row featurette">
+		<div class="col-md-9">
+			<h2 class="featurette-heading title-font">{{ randomBooks[2].title }}</h2>
+			<h3><span class="text-muted title-font">
+				<span ng-repeat="author in randomBooks[2].authors">
+					{{ author.firstName + ' ' + author.lastName }}
+					<span>
+						{{ !$last ? ', ' : '' }}
+					</span>
+				</span>
+			</span></h3>
+			<div class="genres-container">
+				<span ng-repeat="genre in randomBooks[2].genres">
+					<span class="label label-default">{{ genre.name }}</span>
+				</span>
+			</div>
+			<div class="lead" ng-bind-html="randomBooks[2].summary"></div>
+		</div>
+		<div class="col-md-3">
+			<img class="featurette-image img-responsive center-block" ng-src="{{ randomBooks[2].coverLink }}">
+		</div>
+	</div>
+
+</div>

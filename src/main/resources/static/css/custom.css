@@ -1,0 +1,233 @@
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+	display: none !important;
+}
+
+.title-font {
+	font-family: 'Merriweather', sans serif;
+}
+
+/* Sticky footer styles */
+html {
+	position: relative;
+	min-height: 100%;
+}
+
+body {
+	/* Margin bottom by footer height */
+	margin-bottom: 80px;
+}
+.footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	/* Set the fixed height of the footer here */
+	height: 60px;
+	background-color: #f5f5f5;
+}
+
+.container .text-muted {
+  margin: 20px 0;
+}
+
+/* Cover styles */
+.cover {
+	text-align: center;
+	padding: 20px 40px 0 100px;
+}
+
+.cover .lead {
+	width: 70%;
+	margin: 10px auto;
+}
+
+/* Home featurettes */
+.featurette, .cover {
+	color: #5a5a5a;
+}
+
+.featurette .lead {
+	text-align: justify;
+}
+
+.featurette-divider {
+	margin: 80px 0; /* Space out the Bootstrap <hr> more */
+}
+
+/* Thin out the marketing headings */
+.featurette-heading {
+	font-weight: 300;
+	line-height: 1;
+	letter-spacing: -1px;
+}
+
+.nav, .pagination, .carousel, .panel-title a {
+	cursor: pointer;
+}
+
+body {
+	min-height: 200px;
+}
+
+.navbar-static-top {
+	margin-bottom: 19px;
+}
+
+.navbar img {
+	max-height: 50px;
+	padding: 10px;
+	width: auto;
+}
+
+.navbar-brand {
+	color: #00aeef !important;
+}
+
+.navbar-brand:hover {
+	color: #034471 !important;
+}
+
+.navbar-form {
+	
+}
+
+.navbar-search {
+	min-width: 23% !important;
+	margin-left: 20px;
+	margin-right: 20px;
+	
+}
+
+oi-select .select-search {
+	border-color: #ccc;
+}
+
+.icons {
+	text-align: right;
+	max-width: 40px;
+}
+
+.icons .icons-fixed {
+	width: 37px;
+}
+
+.icons span {
+	cursor: pointer;
+}
+
+.icons span:first-child {
+	margin-right: 5px;
+}
+
+.icons .glyphicon-edit {
+	color: #31708F;
+}
+
+.icons .glyphicon-edit:hover {
+	color: #00ABFF;
+}
+
+.icons .glyphicon-trash {
+	color: #C04442;
+}
+
+.icons .glyphicon-trash:hover {
+	color: #F00;
+}
+
+.signin {
+	max-width: 350px;
+	margin: 0 auto;
+}
+
+.page-header {
+	padding-bottom: 0;
+	margin: 0 0 20px 0;
+}
+
+.st-sort-ascent:before{
+	content: '\25B2';
+}
+
+.st-sort-descent:before{
+	content: '\25BC';
+}
+
+.row.no-gutter {
+	margin-left: 0;
+	margin-right: 0;
+}
+
+.row.no-gutter [class*='col-']:not(:first-child) {
+	padding-right: 0px;
+	padding-left: 5px;
+}
+
+.row.no-gutter [class*='col-']:not(:last-child) {
+	padding-right: 5px;
+	padding-left: 0px;
+}
+
+.thumbnail .caption {
+	padding: 4px;
+}
+
+.title-style {
+	font-size: 16px;
+	font-family: 'Merriweather', sans serif;
+}
+
+.thumbnail:hover {
+	text-decoration: none !important
+}
+
+.thumbnail .caption h4 {
+	margin-top: 4px;
+}
+
+.crop {
+    height: 36px;
+    width: 36px;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.crop img {
+    height: auto;
+    width: 60px;
+    margin-top: -15px;
+    margin-left: -15px;
+}
+
+.thumbnail-column {
+	width: 50px;
+	padding-top: 2px !important;
+	padding-bottom: 2px !important;
+}
+
+.below-tab {
+	margin-top: 12px;
+}
+
+.summary p {
+	text-align: justify;
+}
+
+.genres-container {
+	margin-bottom: 15px;
+}
+
+.popover {
+	min-width: 135px;
+}
+
+.list-group .popover p {
+	color: #555;
+}
+
+.genres-badge {
+	margin-left: 5px;
+	margin-bottom: 2px;
+	padding: 2px 6px;
+	font-size: 11px;
+	border-radius: 8px;
+}
