@@ -1,6 +1,6 @@
 <uib-alert ng-repeat="alert in alerts" type="{{ alert.type }}" close="closeAlert($index)">{{ alert.message }}</uib-alert>
 
-<div class="panel panel-default">
+<div class="panel panel-default" ng-if="user.roleAdmin">
 	<div class="panel-heading">
 		<h3 class="panel-title"><strong>{{ (author.id ? 'Edit' : 'New') }} Author</strong></h3>
 	</div>
@@ -84,17 +84,17 @@
 			<th st-sort="birthDate">Birth Date</th>
 			<th st-sort="countryBorn">Country</th>
 			<th st-sort="website">Website</th>
-			<th></th>
+			<th ng-if="user.roleAdmin"></th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr ng-repeat="author in displayedList | filterByFirstOrLastName: searchName">
 			<td>{{ author.id }}</td>
-			<td><a ng-href="#/author/{{ author.id }}">{{ author.firstName + ' ' + author.lastName }}</a></td>
+			<td>{{ author.firstName + ' ' + author.lastName }}</td>
 			<td>{{ author.birthDate | date: 'dd/MM/yyyy' }}</td>
 			<td>{{ author.countryBorn.name }}</td>
 			<td><a ng-href="http://{{ author.website }}">{{ author.website }}</a></td>
-			<td class="icons">
+			<td class="icons" ng-if="user.roleAdmin">
 				<div class="icons-fixed pull-right">
 					<span class="glyphicon glyphicon-edit" ng-click="editAuthor(author.id)"></span>
 					<span class="glyphicon glyphicon-trash" confirm-popover confirm-obj="author" confirm-func="deleteAuthor"></span>

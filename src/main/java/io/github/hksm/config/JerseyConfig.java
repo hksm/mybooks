@@ -10,6 +10,7 @@ import io.github.hksm.controller.BookController;
 import io.github.hksm.controller.CountryController;
 import io.github.hksm.controller.GenreController;
 import io.github.hksm.controller.LanguageController;
+import io.github.hksm.controller.AuthController;
 
 @Component
 @ApplicationPath("/api")
@@ -23,6 +24,7 @@ public class JerseyConfig extends ResourceConfig {
         register(CountryController.class);
         register(GenreController.class);
         register(LanguageController.class);
+        register(AuthController.class);
     }
 
 }

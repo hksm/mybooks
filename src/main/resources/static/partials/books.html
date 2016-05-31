@@ -1,6 +1,6 @@
 <uib-alert ng-repeat="alert in alerts" type="{{ alert.type }}" close="closeAlert($index)">{{ alert.message }}</uib-alert>
 
-<div class="panel panel-default">
+<div class="panel panel-default" ng-if="user.roleAdmin">
 	<div class="panel-heading">
 		<h3 class="panel-title"><strong>{{ (book.id ? 'Edit' : 'New') }} Book</strong></h3>
 	</div>
@@ -127,7 +127,7 @@
 						<th st-sort="publishingDate">Publ. Date</th>
 						<th st-sort="publisher">Publisher</th>
 						<th st-sort="pages">Pages</th>
-						<th></th>
+						<th ng-if="user.roleAdmin"></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -140,7 +140,7 @@
 							</a>
 						</td>
 						<td>{{ book.id }}</td>
-						<td><a ng-href="#/book/{{ book.id }}">{{ book.title }}</a></td>
+						<td><a ng-href="#/books/{{ book.id }}">{{ book.title }}</a></td>
 						<td>
 							<span ng-repeat="author in book.authors">
 								{{ author.firstName + ' ' + author.lastName }}
@@ -161,7 +161,7 @@
 						<td>{{ book.publishingDate | date: 'dd/MM/yyyy' }}</td>
 						<td>{{ book.publisher }}</td>
 						<td>{{ book.pages }}</td>
-						<td class="icons">
+						<td class="icons" ng-if="user.roleAdmin">
 							<div class="icons-fixed pull-right">
 								<span class="glyphicon glyphicon-edit" ng-click="editBook(book.id)"></span>
 								<span class="glyphicon glyphicon-trash" confirm-popover confirm-obj="book" confirm-func="deleteBook"></span>

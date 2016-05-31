@@ -83,3 +83,49 @@ app.factory('wikiSummary', function($http) {
 	
 	return wikiSummary;
 });
+
+app.service('loginService', function($http) {
+	return {
+		login: function(credentials) {
+			return $http.post('api/auth/login', credentials)
+				.then(function(response) {
+					return response.data.token;
+				});
+		},
+		hasRole: function(role) {
+			return $http.get('api/auth/role/' + role)
+				.then(function(response) {
+					return response.data;
+				});
+		}	
+	};
+});
+
+app.service('authCookie', function($cookies, $http) {
+	return {
+		getCookie: function() {
+			return $cookies.getObject('mybooks-token');
+		},
+		saveCookie: function(user) {
+			return $cookies.putObject('mybooks-token', user);
+		},
+		removeCookie: function() {
+			return $cookies.remove('mybooks-token');
+		}
+	};
+});
+
+app.service('checkPermission', function($location, $rootScope) {
+	return {
+		hasRoleUser: function() {
+			if (!$rootScope.user.roleUser) {
+				$location.path('/login');
+			}
+		},
+		notLogged: function() {
+			if ($rootScope.user.roleUser) {
+				$location.path('/home');
+			}
+		}
+	};
+});

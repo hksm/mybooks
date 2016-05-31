@@ -2,7 +2,7 @@
 
 <div class="row">
 	<div class="col-md-3">
-		<div class="panel panel-default">
+		<div class="panel panel-default" ng-if="user.roleAdmin">
 			<div class="panel-heading">
 				<h3 class="panel-title"><strong>{{ (genre.id ? 'Edit' : 'New') }} Genre</strong></h3>
 			</div>
@@ -28,7 +28,7 @@
 			<a href="" class="list-group-item" ng-click="selected = -1" ng-class="{active: selected == -1}">All</a>
 			<a href="" class="list-group-item" ng-click="$parent.selected = genre" ng-class="{active: selected == genre}" ng-repeat="genre in genreList">
 				{{ genre.name }}
-				 <span class="pull-right">
+				 <span class="pull-right" ng-if="user.roleAdmin">
 				 	<button class="btn btn-xs btn-default" ng-click="editGenre(genre.id)">
 						<span class="glyphicon glyphicon-edit"></span>
 					</button>

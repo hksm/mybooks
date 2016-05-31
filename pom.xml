@@ -65,6 +65,12 @@
 			<artifactId>jjwt</artifactId>
 			<version>0.6.0</version>
         </dependency>
+        <dependency>
+			<groupId>de.svenkubiak</groupId>
+			<artifactId>jBCrypt</artifactId>
+			<version>0.4</version>
+		</dependency>
+        
 	</dependencies>
 	
 	<build>

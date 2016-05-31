@@ -231,3 +231,8 @@ oi-select .select-search {
 	font-size: 11px;
 	border-radius: 8px;
 }
+
+.no-hover, .no-hover:hover {
+	color: #bbb !important;
+	cursor: default;
+}

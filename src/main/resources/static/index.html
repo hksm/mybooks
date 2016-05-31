@@ -38,6 +38,12 @@
 					<li data-match-route="/authors.*"><a href="#/authors">Authors</a></li>
 					<li data-match-route="/genres.*"><a href="#/genres">Genres</a></li>
 				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li ng-if="user.roleUser"><a class="no-hover">Logged as: <strong>{{ user.username }}</strong></a></li>
+					<li ng-if="!user.roleUser"><a href="#/register">Register</a></li>
+					<li ng-if="!user.roleUser"><a href="#/login">Login</a></li>
+					<li ng-if="user.roleUser"><a href="" ng-click="logout()">Logout</a></li>
+				</ul>
 				<form class="navbar-form">
 					<input type="text" class="form-control navbar-search" placeholder="Search..." 
 						ng-model="selected" ng-focus="getBooksSearch()" typeahead-on-select="onSelect($item, $model)"
@@ -60,6 +66,7 @@
 	<script type="text/javascript" src="js/angular.js"></script>
 	<script type="text/javascript" src="js/angular-route.js"></script>
 	<script type="text/javascript" src="js/angular-sanitize.js"></script>
+	<script type="text/javascript" src="js/angular-cookies.js"></script>
 	
 	<!-- mgcrea.ngStrap.navbar -->
 	<script type="text/javascript" src="js/mgcrea.navbar.js"></script>

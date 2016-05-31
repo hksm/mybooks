@@ -1,11 +1,19 @@
-var app = angular.module('mymovies', ['ngRoute', 'ngSanitize', 'oi.select', 'ui.bootstrap', 
-                                      'smart-table', 'mgcrea.ngStrap.navbar']);
+var app = angular.module('mymovies', ['ngRoute', 'ngSanitize', 'ngCookies', 'oi.select', 
+                                      'ui.bootstrap', 'smart-table', 'mgcrea.ngStrap.navbar']);
 
 app.config(function($routeProvider) {
 	$routeProvider
 		.when('/', {
 			templateUrl: 'partials/home.html',
 			controller: 'homeController'
+		})
+		.when('/login', {
+			templateUrl: 'partials/login.html',
+			controller: 'loginController'
+		})
+		.when('/register', {
+			templateUrl: 'partials/register.html',
+			controller: 'registerController'
 		})
 		.when('/books', {
 			templateUrl: 'partials/books.html',

@@ -1,6 +1,34 @@
-app.controller('navigationController', function($scope, $location, dataFactory) {
+app.controller('navigationController', function($rootScope, $scope, $location, 
+										$http, dataFactory, loginService, authCookie) {
 	$scope.navbarCollapsed = false;
 	
+	// Authentication & Authorization	
+	var checkCookie = function() {
+		$rootScope.user = authCookie.getCookie() || {
+			username: '',
+			token: null,
+			roleUser: false,
+			roleAdmin: false
+		};
+		$http.defaults.headers.common.Authorization = 
+			$rootScope.user.token ? 'Bearer ' + $rootScope.user.token : '';
+	};
+	
+	checkCookie();
+		
+	$scope.logout = function() {
+		$rootScope.user = {
+			username: '',
+			token: null,
+			roleUser: false,
+			roleAdmin: false
+		};
+		$http.defaults.headers.common.Authorization = '';
+		authCookie.removeCookie();
+		$location.path('/');
+	};
+	
+	// Search bar functions
 	$scope.getBookByTitle = function(val) {
 		return dataFactory.getBooks()
 			.then(function(response) {
@@ -21,8 +49,67 @@ app.controller('navigationController', function($scope, $location, dataFactory) 
 	
 	// On select
 	$scope.onSelect = function($item, $model) {
-		console.log()
 		$location.path('/books/' + $model.id);
+	};
+});
+
+app.controller('loginController', function($rootScope, $scope, $location, loginService, 
+										   authCookie, checkPermission, $http, $q) {
+	
+	checkPermission.notLogged();
+	
+	// ui-alert
+	$scope.alerts = [];
+	var addAlert = function(type, message) {
+		$scope.alerts.push({
+			type: type,
+			message: message
+		});
+	};
+	$scope.closeAlert = function(index) {
+		$scope.alerts.splice(index, 1);
+	};
+	
+	$scope.rememberMe = true;
+	
+	var checkRoles = function() {
+		var deferred = $q.defer();
+		
+		loginService.hasRole('user')
+			.then(function(roleUser) {
+				$rootScope.user.roleUser = roleUser;
+				loginService.hasRole('admin')
+					.then(function(roleAdmin) {
+						$q(function(resolve, reject) {
+							$rootScope.user.roleAdmin = roleAdmin;
+							resolve();
+						}).then(function() {
+							deferred.resolve();
+						});
+					});
+			});
+		
+		return deferred.promise;
+		
+	};
+	
+	$scope.login = function(credentials) {
+		loginService.login(credentials)
+			.then(function(token) {
+				$rootScope.user.username = credentials.username;
+				$rootScope.user.token = token;
+				$http.defaults.headers.common.Authorization = 'Bearer ' + token;
+				checkRoles().then(function() {
+					if ($scope.rememberMe) {
+						authCookie.saveCookie($rootScope.user);
+					} else {
+						authCookie.removeCookie();
+					}
+					$location.path('/books');
+				});
+			}, function(response) {
+				addAlert('danger', 'Invalid login!');
+			});
 	};
 });
 
@@ -70,13 +157,15 @@ app.controller('homeController', function($scope, dataFactory, wikiSummary, $sce
 	getBooks();
 });
 
-app.controller('booksController', function($scope, $q, dataFactory) {
+app.controller('booksController', function($scope, $q, dataFactory, checkPermission) {
 	
 	$scope.book = {};
 	$scope.isProcessing = false;
 	$scope.searchAuthor = '';
 	$scope.searchTitle = '';
-		
+	
+	checkPermission.hasRoleUser();
+	
 	// ui-alert
 	$scope.alerts = [];
 	
@@ -224,11 +313,13 @@ app.controller('booksController', function($scope, $q, dataFactory) {
 	getGenres();
 });
 
-app.controller('authorsController', function($scope, $q, dataFactory) {
+app.controller('authorsController', function($scope, $q, dataFactory, checkPermission) {
 	
 	$scope.author = {};
 	$scope.isProcessing = false;
 	$scope.searchName = '';
+	
+	checkPermission.hasRoleUser();
 	
 	// ui-datepicker
 	$scope.altInputFormats = ['d!/M!/yyyy'];
@@ -347,8 +438,10 @@ app.controller('authorsController', function($scope, $q, dataFactory) {
 	getAuthors();
 });
 
-app.controller('genresController', function($scope, dataFactory) {
+app.controller('genresController', function($scope, dataFactory, checkPermission) {
 
+	checkPermission.hasRoleUser();
+	
 	$scope.genre = {};
 	$scope.isProcessing = false;
 	$scope.selected = -1;
@@ -484,4 +577,34 @@ app.controller('bookDetailsController', function($scope, dataFactory, $routePara
 	};
 	
 	getBook($routeParams.bookId);
+});
+
+app.controller('registerController', function($scope, $http) {
+	
+	// ui-alert
+	$scope.alerts = [];
+	
+	var addAlert = function(type, message) {
+		$scope.alerts.push({
+			type: type,
+			message: message
+		});
+	};
+	
+	$scope.closeAlert = function(index) {
+		$scope.alerts.splice(index, 1);
+	};
+	
+	$scope.register = function(user) {
+		if (user.password !== $scope.matchingPassword) {
+			addAlert('danger', 'Password fields must match!');
+		} else {
+			$http.post('/api/auth/register', user)
+				.then(function(response) {
+					addAlert('success', 'Registration completed with success!');
+				}, function(response) {
+					addAlert('danger', response.statusText);
+				});
+		}
+	};
 });
