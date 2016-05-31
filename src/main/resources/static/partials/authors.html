@@ -1,6 +1,6 @@
 <uib-alert ng-repeat="alert in alerts" type="{{ alert.type }}" close="closeAlert($index)">{{ alert.message }}</uib-alert>
 
-<div class="panel panel-default" ng-if="user.roleAdmin">
+<div class="panel panel-default" ng-show="{{ user.roleAdmin }}">
 	<div class="panel-heading">
 		<h3 class="panel-title"><strong>{{ (author.id ? 'Edit' : 'New') }} Author</strong></h3>
 	</div>
@@ -94,7 +94,7 @@
 			<td>{{ author.birthDate | date: 'dd/MM/yyyy' }}</td>
 			<td>{{ author.countryBorn.name }}</td>
 			<td><a ng-href="http://{{ author.website }}">{{ author.website }}</a></td>
-			<td class="icons" ng-if="user.roleAdmin">
+			<td class="icons" ng-show="{{ user.roleAdmin }}">
 				<div class="icons-fixed pull-right">
 					<span class="glyphicon glyphicon-edit" ng-click="editAuthor(author.id)"></span>
 					<span class="glyphicon glyphicon-trash" confirm-popover confirm-obj="author" confirm-func="deleteAuthor"></span>

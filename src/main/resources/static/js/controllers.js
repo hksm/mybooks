@@ -2,7 +2,7 @@ app.controller('navigationController', function($rootScope, $scope, $location,
 										$http, dataFactory, loginService, authCookie) {
 	$scope.navbarCollapsed = false;
 	
-	// Authentication & Authorization	
+	// Authentication & Authorization
 	var checkCookie = function() {
 		$rootScope.user = authCookie.getCookie() || {
 			username: '',
@@ -313,7 +313,7 @@ app.controller('booksController', function($scope, $q, dataFactory, checkPermiss
 	getGenres();
 });
 
-app.controller('authorsController', function($scope, $q, dataFactory, checkPermission) {
+app.controller('authorsController', function($scope, $q, dataFactory, checkPermission, $rootScope) {
 	
 	$scope.author = {};
 	$scope.isProcessing = false;
