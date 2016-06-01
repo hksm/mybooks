@@ -127,7 +127,7 @@
 						<th st-sort="publishingDate">Publ. Date</th>
 						<th st-sort="publisher">Publisher</th>
 						<th st-sort="pages">Pages</th>
-						<th ng-if="user.roleAdmin"></th>
+						<th ng-show="{{ user.roleAdmin }}"></th>
 					</tr>
 				</thead>
 				<tbody>

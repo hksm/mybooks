@@ -300,10 +300,14 @@ app.controller('booksController', function($scope, $q, dataFactory, checkPermiss
 	};
 	
 	$scope.getTooltip = function(arr) {
-		var string = arr.slice(1).reduce(function(str, curr) {
-			return str + ', ' + curr.name;
-		}, arr[0].name);
-		return string;
+		if (arr && arr.length > 0) {
+			var string = arr.slice(1).reduce(function(str, curr) {
+				return str + ', ' + curr.name;
+			}, arr[0].name);
+			return string;
+		} else {
+			return '';
+		}
 	};
 	
 	$scope.clearFormButton = clearForm;

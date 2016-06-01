@@ -45,7 +45,7 @@
 			<h1><small>Showing:</small> <strong>{{ !selected.name ? 'All' : selected.name }}</strong></h1>
 		</div>
 		<div class="row">
-			<div class="col-xs-6 col-md-3" ng-repeat="book in bookList | filterByGenre: selected">
+			<div class="col-xs-6 col-md-4" ng-repeat="book in bookList | filterByGenre: selected">
 				<book data="book"></book>
 			</div>
 		</div>

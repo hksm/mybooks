@@ -236,3 +236,27 @@ oi-select .select-search {
 	color: #bbb !important;
 	cursor: default;
 }
+
+.crop-thumbnail {
+	position: relative;
+	height: 350px;
+	overflow: hidden;
+}
+.crop-thumbnail img {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	height: 100%;
+	width: auto;
+	-webkit-transform: translate(-50%,-50%);
+	    -ms-transform: translate(-50%,-50%);
+	        transform: translate(-50%,-50%);
+}
+.crop-thumbnail img.portrait {
+	width: 100%;
+	height: auto;
+}
+
+.caption {
+	height: 108px;
+}
